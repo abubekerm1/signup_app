@@ -1,6 +1,6 @@
 # Pet Pals Signup
 
-My name is Abubeker Mohammed. I picked the Standard track, and I only did Task A, the local signup tip. I did not do Task B or Task C.
+My name is Abubeker Mohammed. I picked the Undergraduate track, and I only did Task A, the local signup tip.
 
 ## Explanation of the local signup-tip simulation
 
@@ -25,3 +25,7 @@ My laptop do not have enough RAM for the emulator, so I used my Android phone. P
 ## The form
 
 MyApp is a StatelessWidget because it only keeps the theme. SignupPage is a StatefulWidget because the text boxes and the tip status change. Empty fields, an email with no @, and a password shorter than 6 characters show errors. The green snackbar only comes when validate() is true, and the tip cannot approve the signup.
+
+## My Contribution
+
+I worked on this project by myself. I made the signup form, added the local signup tip, and tested the app. I also fixed the screen overflow problem and wrote the README.
