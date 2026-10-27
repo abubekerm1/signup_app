@@ -110,7 +110,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 30));
     await tester.pump();
 
-    expect(find.text('Preset demo tip'), findsOneWidget);
+    expect(find.text('Preset demo tip—not live AI.'), findsOneWidget);
     expect(find.text(SignupTipCoach.tips.first), findsOneWidget);
     expect(find.text('Loading tip...'), findsNothing);
   });
@@ -126,7 +126,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 30));
     await tester.pump();
 
-    expect(find.text('Preset demo tip'), findsOneWidget);
+    expect(find.text('Preset demo tip—not live AI.'), findsOneWidget);
 
     await tester.ensureVisible(find.text('Sign Up'));
     await tester.tap(find.text('Sign Up'));
@@ -176,7 +176,7 @@ void main() {
     await tester.pump();
 
     expect(find.text('Tip did not load. Please retry.'), findsOneWidget);
-    expect(find.text('Preset demo tip'), findsNothing);
+    expect(find.text('Preset demo tip—not live AI.'), findsNothing);
     expect(find.text('Retry'), findsOneWidget);
 
     await tester.tap(find.text('Retry'));
@@ -194,7 +194,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 30));
     await tester.pump();
 
-    expect(find.text('Preset demo tip'), findsOneWidget);
+    expect(find.text('Preset demo tip—not live AI.'), findsOneWidget);
     expect(find.text('Tip did not load. Please retry.'), findsNothing);
   });
 

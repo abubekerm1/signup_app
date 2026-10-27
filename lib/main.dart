@@ -258,7 +258,7 @@ class _SignupPageState extends State<SignupPage> {
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Preset demo tip',
+                      'Preset demo tip—not live AI.',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
