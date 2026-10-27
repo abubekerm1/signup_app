@@ -1,8 +1,16 @@
 # Pet Pals Signup
 
-I made a signup page for a pretend app called Pet Pals. People can join if they want to help a pet find a home. I did the Standard level, the easy one. I only did Task A, the local signup tip. I did not do Task B or Task C.
+I made a signup page for a pretend app called Pet Pals. People can join if they want to help a pet find a home.
 
-The folder is signup_app on the Desktop. I ran flutter create, then I deleted the starter code in lib/main.dart and put the signup form in. After that I changed the color to green and added the tip section.
+## README Reflection
+
+My name is Abubeker Mohammed. I picked the Standard track, the easy one. The task I finished is only Task A, the local signup tip. I did not do Task B or Task C.
+
+I ran flutter test on my laptop and 13 tests passed. The tests was for an empty form, an email with no @, a password shorter than 6 characters, a valid signup with the green message, the tip loading and then the preset text, a tip that still does not approve signup, a tip that does not copy the password, the tip error with Retry, and a short phone screen.
+
+The fixed category is password_help. The preset responses are three short sentences saved in SignupTipCoach, inside the app. When I tap the button, the app waits a little and then shows one of those sentences. There is no server. I do not send the form out, and there is no login or API key. The tip also does not use the password from the form. If the fail switch is on, it shows an error instead, and Retry tries the same saved list again.
+
+The folder is signup_app on the Desktop. I ran flutter create, then I deleted the starter code in lib/main.dart and put the signup form in. After that I changed the color to green and added the tip section. The tips stay on the phone. They do not need internet.
 
 ## How to run
 
