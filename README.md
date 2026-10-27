@@ -1,48 +1,41 @@
 # Pet Pals Signup
 
-This is my signup screen for a pretend app called Pet Pals. People can make an account if they want to help a pet find a home. I did the Standard challenge, so I only finished Task A (the local signup tip). I did not do Task B or Task C. Those are the advanced extras, and I picked the easier level.
+I made a signup page for a pretend app called Pet Pals. People can join if they want to help a pet find a home. I did the Standard level, the easy one. I only did Task A, the local signup tip. I did not do Task B or Task C.
 
-I created the folder with `flutter create signup_app` on the Desktop. I kept the folder. I only deleted the starter code inside `lib/main.dart`, pasted the signup form, then I changed the theme to green for Pet Pals and added the tip section.
+The folder is signup_app on the Desktop. I ran flutter create, then I deleted the starter code in lib/main.dart and put the signup form in. After that I changed the color to green and added the tip section.
 
-## How to run it
+## How to run
 
-My laptop do not have enough RAM for the emulator, so I test on a real Android phone.
+My laptop do not have enough RAM for the emulator, so I used my Android phone.
 
-1. Plug the phone with a USB cable.
-2. Turn on USB debugging.
-3. In this folder run `flutter devices` and make sure the phone is on the list.
-4. Run `flutter run`.
+Plug the phone in and turn on USB debugging. Then run flutter devices, and after that flutter run.
 
-The release apk command is:
-
-```
-flutter build apk --release
-```
-
-When it finish, the file is `build/app/outputs/flutter-apk/app-release.apk`.
+The apk command is flutter build apk --release. The file is build/app/outputs/flutter-apk/app-release.apk.
 
 ## The form
 
-`MyApp` is a StatelessWidget. It only keep the theme and open `SignupPage`. `SignupPage` is a StatefulWidget because the name, email, and password controllers live there, and the tip status also change while the page is open.
+MyApp is a StatelessWidget. It only keeps the theme and opens SignupPage. SignupPage is a StatefulWidget because the person types in the boxes and the tip status change while the page is open. The name, email, and password sit in TextEditingControllers.
 
-If I leave the fields empty and press Sign Up, the errors are "Please enter your name", "Please enter your email", and "Please enter a password".
+If the name is empty, it says "Please enter your name". If the email is empty, it says "Please enter your email". If the email has no @, it says "Please enter a valid email". If the password is empty, it says "Please enter a password". If the password is shorter than 6 characters, it says "Password must be at least 6 characters".
 
-If the email has no @, it says "Please enter a valid email". If the password is shorter than 6 characters, it says "Password must be at least 6 characters". When the form is valid, a green snackbar says the demo signup passed validation.
+The green snackbar only comes when the form validate() is true. I tested this. If a tip is already showing and the boxes are still empty, Sign Up still shows the errors. The tip cannot decide that the account is ok.
 
-The tip do not approve the signup. If a tip is already on the screen and the form is still empty, Sign Up still show the errors. The result label is "Preset demo tip—not live AI."
+## From the button to the text
 
-## Trace the tip from the button to the text
+When I tap "Get a signup tip", it calls _loadTip() in _SignupPageState. That method does not read _nameController, _emailController, or _passwordController. It calls SignupTipCoach.loadTip() in lib/signup_tip_coach.dart. The category in that file is password_help, and the tips are a short fixed list.
 
-When I tap "Get a signup tip", the button call `_loadTip()` in `_SignupPageState`. That method do not read the name, the email, or the password. It call `SignupTipCoach.loadTip()` in `lib/signup_tip_coach.dart`. The coach use the fixed category `password_help` and return one short tip from the list in the app.
+loadTip waits about 700 milliseconds. In that time setState changes _tipStatus to loading, so SignupPage builds again. The button is disabled. I see a CircularProgressIndicator and the words "Loading tip...".
 
-The coach wait about 700 milliseconds. While it wait, `setState` change `_tipStatus` from idle to loading. `SignupPage` is a StatefulWidget, so this rebuild the tip area. The button is disabled, and a `CircularProgressIndicator` show next to the words "Loading tip...".
+If it works, _tipStatus becomes success. Then the page shows the words "Preset demo tip—not live AI." and the tip in a normal Text widget. The tips are all under 240 characters.
 
-If it work, `_tipStatus` change to success. The same page then show the label "Preset demo tip—not live AI." and the tip as plain text. The tip is under 240 characters.
+If I turn on "Make the tip fail", the coach still waits, then it throws TipLoadException. _tipStatus becomes error. I see "Tip did not load. Please retry." and the button says "Retry". Retry calls _loadTip() again. If the switch is still on, it fails again, so I turn the switch off and tap Retry. Then the preset tip shows.
 
-If "Make the tip fail" is on, the coach throw `TipLoadException` after the wait. `_tipStatus` change to error. I see "Tip did not load. Please retry." and the button text change to "Retry". Retry call `_loadTip()` again. If the switch is still on, it fail again. I turn the switch off and tap Retry, then the preset tip show.
+## The test that changed my code
 
-## Which test changed what I built
+The first time I ran flutter test, the test "app opens on the signup page" failed. Flutter said the Column overflowed by 98 pixels on the bottom. The body in the test was only 512 pixels tall, so the form and the tip did not fit. I did not notice this when I was just looking at the code. On my phone the tip button can get cut off too, especially when the keyboard is open.
 
-The first time I ran `flutter test`, the test "app opens on the signup page" failed. Flutter said the Column overflowed by 98 pixels on the bottom. The test body was only 512 pixels tall, so the form and the tip section did not fit. I did not see this just from reading the code. On the phone the tip button can be cut off, and the keyboard make it worse.
+I put the form in a SingleChildScrollView and I set the Column mainAxisSize to min, so the page can scroll. I ran flutter test again and all 13 tests passed. That includes empty fields, a bad email, a short password, a good signup, the tip success, the tip error with Retry, and a short screen of 320 by 480.
 
-I put the form inside a `SingleChildScrollView` and set the Column `mainAxisSize` to min so the page can scroll. I ran the tests again and all 13 passed, including a short screen of 320 by 480.
+## One limit
+
+The fixed tips are safer because they do not need internet and they never see the password, the email, or the name. The limit is the tip is always general. It is not about the password the person really typed. Later I could let the user pick password help or email help, but I still would not read the text boxes.
